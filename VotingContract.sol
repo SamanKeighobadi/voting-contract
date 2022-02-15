@@ -24,7 +24,13 @@ contract Voiting {
        return 'Candidate added';
     }
 
-    function vote(uint id) public returns(string memory) {}
+    function vote(uint id) public returns(string memory) {
+        require(id<= CondidateCount && id > 0,' Candidate not found');
+        require(!voted[msg.sender],'You have already voted');
+        candidates[id].voteCount++;
+        voted[msg.sender] = true;
+        return "Voted";
+    }
 
     function Result() public returns(string memory) {}
 }
