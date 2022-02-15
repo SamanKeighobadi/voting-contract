@@ -17,9 +17,14 @@ contract Voiting {
         owener = msg.sender;
     }
 
-    function addCandidate() public {}
+    function addCandidate(string memory _name) public returns(string memory) {
+       require(msg.sender == owener,'Only owner can add candidate');
+       CondidateCount++;
+       candidates[CondidateCount] =  Condidate(CondidateCount,_name,0);
+       return 'Candidate added';
+    }
 
-    function vote(uint256 id) public {}
+    function vote(uint id) public returns(string memory) {}
 
-    function Result() public {}
+    function Result() public returns(string memory) {}
 }
