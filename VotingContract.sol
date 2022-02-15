@@ -17,20 +17,31 @@ contract Voiting {
         owener = msg.sender;
     }
 
-    function addCandidate(string memory _name) public returns(string memory) {
-       require(msg.sender == owener,'Only owner can add candidate');
-       CondidateCount++;
-       candidates[CondidateCount] =  Condidate(CondidateCount,_name,0);
-       return 'Candidate added';
+    function addCandidate(string memory _name) public returns (string memory) {
+        require(msg.sender == owener, "Only owner can add candidate");
+        CondidateCount++;
+        candidates[CondidateCount] = Condidate(CondidateCount, _name, 0);
+        return "Candidate added";
     }
 
-    function vote(uint id) public returns(string memory) {
-        require(id<= CondidateCount && id > 0,' Candidate not found');
-        require(!voted[msg.sender],'You have already voted');
+    function vote(uint256 id) public returns (string memory) {
+        require(id <= CondidateCount && id > 0, " Candidate not found");
+        require(!voted[msg.sender], "You have already voted");
         candidates[id].voteCount++;
         voted[msg.sender] = true;
         return "Voted";
     }
 
-    function Result() public returns(string memory) {}
+    function voitingResult() public returns (string memory) {
+        uint256 winnerID = 0;
+        uint256 winnerCount = 0;
+
+        for (uint256 i = 1; i <= CondidateCount; i++) {
+            if (candidates[i].voteCount > winnerCount) {
+                winnerID = i;
+                winnerCount = candidates[i].voteCount;
+            }
+        }
+        return candidates[winnerID].name;
+    }
 }
