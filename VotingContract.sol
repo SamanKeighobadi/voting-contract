@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: GPL-3.0
+
 pragma solidity >=0.7.0 <0.9.0;
 
 contract Voiting {
     address owener;
-    uint256 CondidateCount;
+    uint256 public CondidateCount;
 
     struct Condidate {
         uint256 id;
@@ -10,7 +12,7 @@ contract Voiting {
         uint128 voteCount;
     }
 
-    mapping(uint256 => Condidate) candidates;
+    mapping(uint256 => Condidate) public candidates;
     mapping(address => bool) voted;
 
     constructor() public {
@@ -32,7 +34,7 @@ contract Voiting {
         return "Voted";
     }
 
-    function voitingResult() public returns (string memory) {
+    function voitingResult() public view returns (string memory) {
         uint256 winnerID = 0;
         uint256 winnerCount = 0;
 
